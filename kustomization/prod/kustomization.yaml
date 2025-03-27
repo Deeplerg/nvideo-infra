@@ -9,40 +9,48 @@ namespace: nvideo-prod
 
 images:
 - name: nvideo-api-image-name-placeholder
+  newName: registry.deeplerg.dev/nvideo-api
+  newTag: main-bf59cdc6
 - name: nvideo-web-image-name-placeholder
+  newName: registry.deeplerg.dev/nvideo-web
+  newTag: main-bf59cdc6
 
 configMapGenerator:
-- name: environment-variables
-  behavior: create
+- behavior: create
   envs:
   - environment-variables.env
+  name: environment-variables
+
+
+
+
+
+
 
 replacements:
 - source:
-    name: environment-variables
     fieldPath: data.REGISTRY_CRED_NAME
     kind: ConfigMap
+    name: environment-variables
   targets:
   - fieldPaths:
     - spec.template.spec.imagePullSecrets.[name=registry-secret-name-placeholder].name
     select:
       kind: Deployment
-      labelSelector: "needs-pull-secret=private"
-
+      labelSelector: needs-pull-secret=private
 - source:
-    name: environment-variables
     fieldPath: data.NAME_FOR_GATEWAY
     kind: ConfigMap
+    name: environment-variables
   targets:
   - fieldPaths:
-      - metadata.labels.name-for-gateway
+    - metadata.labels.name-for-gateway
     select:
       kind: Namespace
-
 - source:
-    name: environment-variables
     fieldPath: data.GATEWAY_NAME
     kind: ConfigMap
+    name: environment-variables
   targets:
   - fieldPaths:
     - spec.parentRefs.0.name
@@ -52,11 +60,10 @@ replacements:
     - spec.parentRefs.0.name
     select:
       kind: TCPRoute
-
 - source:
-    name: environment-variables
     fieldPath: data.GATEWAY_NAMESPACE
     kind: ConfigMap
+    name: environment-variables
   targets:
   - fieldPaths:
     - spec.parentRefs.0.namespace
@@ -66,46 +73,43 @@ replacements:
     - spec.parentRefs.0.namespace
     select:
       kind: TCPRoute
-
 - source:
-    name: environment-variables
     fieldPath: data.GATEWAY_HOST_API
     kind: ConfigMap
+    name: environment-variables
   targets:
   - fieldPaths:
     - spec.hostnames.0
     select:
       kind: HTTPRoute
-      labelSelector: "nvideo/route-for=api"
-
+      labelSelector: nvideo/route-for=api
 - source:
-    name: environment-variables
     fieldPath: data.GATEWAY_HOST_WEB
     kind: ConfigMap
+    name: environment-variables
   targets:
   - fieldPaths:
     - spec.hostnames.0
     select:
       kind: HTTPRoute
-      labelSelector: "nvideo/route-for=web"
-
+      labelSelector: nvideo/route-for=web
 - source:
-    name: environment-variables
     fieldPath: data.GATEWAY_PATH_API
     kind: ConfigMap
+    name: environment-variables
   targets:
   - fieldPaths:
     - spec.rules.0.matches.0.path.value
     select:
       kind: HTTPRoute
-      labelSelector: "nvideo/route-for=api"
+      labelSelector: nvideo/route-for=api
   - fieldPaths:
     - spec.template.spec.containers.[name=nvideo-api].env.[name=API_PATH].value
     select:
       kind: Deployment
-      name: "nvideo-api"
+      name: nvideo-api
   - fieldPaths:
     - spec.template.spec.containers.[name=nvideo-web].env.[name=API_PATH].value
     select:
       kind: Deployment
-      name: "nvideo-web"
+      name: nvideo-web
