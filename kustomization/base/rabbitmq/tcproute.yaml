@@ -1,0 +1,21 @@
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: rabbitmq-tcproute
+  labels:
+    nvideo/route-for: rabbitmq
+spec:
+  parentRefs:
+    - name: gateway-name-placeholder # kustomize GATEWAY_NAME
+      namespace: gateway-namespace-placeholder # kustomize GATEWAY_NAMESPACE
+  hostnames:
+    - gateway-host-placeholder # kustomize GATEWAY_HOST_RABBITMQ_AMQP
+  rules:
+    - backendRefs:
+        - name: nvideo-rabbitmq-svc
+          kind: Service
+          port: 5672
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

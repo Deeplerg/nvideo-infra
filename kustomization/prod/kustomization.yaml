@@ -1,0 +1,122 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+
+resources:
+- ../base
+
+namespace: nvideo-prod
+
+images:
+- name: nvideo-api-image-name-placeholder
+- name: nvideo-web-image-name-placeholder
+
+configMapGenerator:
+- name: environment-variables
+  behavior: create
+  envs:
+  - environment-variables.env
+
+replacements:
+- source:
+    name: environment-variables
+    fieldPath: data.REGISTRY_CRED_NAME
+    kind: ConfigMap
+  targets:
+  - fieldPaths:
+    - spec.template.spec.imagePullSecrets.[name=registry-secret-name-placeholder].name
+    select:
+      kind: Deployment
+      labelSelector: "needs-pull-secret=private"
+
+- source:
+    name: environment-variables
+    fieldPath: data.NAME_FOR_GATEWAY
+    kind: ConfigMap
+  targets:
+  - fieldPaths:
+      - labels.name-for-gateway
+    select:
+      kind: Namespace
+
+- source:
+    name: environment-variables
+    fieldPath: data.GATEWAY_NAME
+    kind: ConfigMap
+  targets:
+  - fieldPaths:
+    - spec.parentRefs.0.name
+    select:
+      kind: HTTPRoute
+  - fieldPaths:
+    - spec.parentRefs.0.name
+    select:
+      kind: TCPRoute
+
+- source:
+    name: environment-variables
+    fieldPath: data.GATEWAY_NAMESPACE
+    kind: ConfigMap
+  targets:
+  - fieldPaths:
+    - spec.parentRefs.0.namespace
+    select:
+      kind: HTTPRoute
+  - fieldPaths:
+    - spec.parentRefs.0.namespace
+    select:
+      kind: TCPRoute
+
+- source:
+    name: environment-variables
+    fieldPath: data.GATEWAY_HOST_API
+    kind: ConfigMap
+  targets:
+  - fieldPaths:
+    - spec.hostnames.0
+    select:
+      kind: HTTPRoute
+      labelSelector: "nvideo/route-for=api"
+
+- source:
+    name: environment-variables
+    fieldPath: data.GATEWAY_HOST_WEB
+    kind: ConfigMap
+  targets:
+  - fieldPaths:
+    - spec.hostnames.0
+    select:
+      kind: HTTPRoute
+      labelSelector: "nvideo/route-for=web"
+
+- source:
+    name: environment-variables
+    fieldPath: data.GATEWAY_HOST_RABBITMQ
+    kind: ConfigMap
+  targets:
+  - fieldPaths:
+    - spec.hostnames.0
+    select:
+      kind: TCPRoute
+      labelSelector: "nvideo/route-for=rabbitmq"
+
+- source:
+    name: environment-variables
+    fieldPath: data.GATEWAY_PATH_API
+    kind: ConfigMap
+  targets:
+  - fieldPaths:
+    - spec.rules.0.matches.0.path.value
+    select:
+      kind: HTTPRoute
+      labelSelector: "nvideo/route-for=api"
+  - fieldPaths:
+    - spec.template.spec.containers.[name=nvideo-api].env.[name=API_PATH].value
+    select:
+      kind: Deployment
+      name: "nvideo-api"
+  - fieldPaths:
+    - spec.template.spec.containers.[name=nvideo-web].env.[name=API_PATH].value
+    select:
+      kind: Deployment
+      name: "nvideo-web"

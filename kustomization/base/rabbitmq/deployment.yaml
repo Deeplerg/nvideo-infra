@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nvideo-rabbitmq
+spec:
+  selector:
+    matchLabels:
+      app: nvideo-rabbitmq
+  replicas: 1 # replicas
+  template:
+    metadata:
+      labels:
+        app: nvideo-rabbitmq
+    spec:
+      nodeSelector:
+        main-ingress: "true"
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:4-management-alpine
+        ports:
+        - containerPort: 5672
+        - containerPort: 15672
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "0m"
+        env:
+        - name: RABBITMQ_DEFAULT_PASS
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-rabbitmq-secret
+              key: password
+        - name: RABBITMQ_DEFAULT_USER
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-rabbitmq-secret
+              key: user
+        volumeMounts:
+        - name:  rabbitmq-data
+          mountPath: /var/lib/rabbitmq
+      volumes:
+      - name: rabbitmq-data
+        persistentVolumeClaim:
+          claimName: nvideo-rabbitmq-pvc

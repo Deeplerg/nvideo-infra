@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nvideo-api
+  labels:
+    needs-pull-secret: private
+spec:
+  selector:
+    matchLabels:
+      app: nvideo-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nvideo-api
+    spec:
+      nodeSelector:
+        main-ingress: "true"
+      containers:
+      - name: nvideo-api
+        image: nvideo-api-image-name-placeholder # kustomize
+        ports:
+        - containerPort: 8000
+        env:
+        - name: API_PATH
+          value: /placeholder
+        - name: MODEL_AVAILABILITY_THRESHOLD
+          value: "30"
+
+        # postgres
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-db-secret
+              key: password
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-db-secret
+              key: user
+        - name: POSTGRES_HOST
+          value: nvideo-postgres
+        - name: POSTGRES_PORT
+          value: "5432"
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-db-secret
+              key: db-name
+
+        # rabbitmq
+        - name: RABBITMQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-rabbitmq-secret
+              key: password
+        - name: RABBITMQ_USER
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-rabbitmq-secret
+              key: user
+        - name: RABBITMQ_HOST
+          value: nvideo-rabbitmq
+        - name: RABBITMQ_PORT
+          value: "5672"
+        resources:
+          requests:
+            memory: 128Mi
+      imagePullSecrets:
+      - name: registry-secret-name-placeholder # kustomize

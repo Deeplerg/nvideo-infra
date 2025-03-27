@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nvideo-web
+  labels:
+    needs-pull-secret: private
+spec:
+  selector:
+    matchLabels:
+      app: nvideo-web
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nvideo-web
+    spec:
+      nodeSelector:
+        main-ingress: "true"
+      containers:
+      - name: nvideo-web
+        image: nvideo-web-image-name-placeholder # kustomize
+        ports:
+        - containerPort: 8000
+        env:
+        - name: API_PROTO
+          value: http # internal
+        - name: API_HOST
+          value: "nvideo-api"
+        - name: API_PORT
+          value: "80"
+        - name: API_PATH
+          value: /placeholder
+
+        # rabbitmq
+        - name: RABBITMQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-rabbitmq-secret
+              key: password
+        - name: RABBITMQ_USER
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-rabbitmq-secret
+              key: user
+        - name: RABBITMQ_HOST
+          value: nvideo-rabbitmq
+        - name: RABBITMQ_PORT
+          value: "5672"
+        resources:
+          requests:
+            memory: 128Mi
+      imagePullSecrets:
+      - name: registry-secret-name-placeholder # kustomize

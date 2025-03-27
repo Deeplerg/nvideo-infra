@@ -1,0 +1,21 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: nvideo-web-httproute
+  labels:
+    nvideo/route-for: web
+spec:
+  parentRefs:
+    - name: gateway-name # kustomize GATEWAY_NAME
+      namespace: gateway-namespace # kustomize GATEWAY_NAMESPACE
+  hostnames:
+    - gateway-host # kustomize GATEWAY_HOST_WEB
+  rules:
+    - backendRefs:
+        - name: nvideo-web-svc
+          kind: Service
+          port: 80
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
