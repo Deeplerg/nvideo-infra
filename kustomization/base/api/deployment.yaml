@@ -63,6 +63,8 @@ spec:
           value: nvideo-rabbitmq
         - name: RABBITMQ_PORT
           value: "5672"
+        - name: RABBITMQ_PROTO
+          value: "amqp"
         resources:
           requests:
             memory: 128Mi
