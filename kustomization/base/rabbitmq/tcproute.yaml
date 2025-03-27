@@ -15,7 +15,3 @@ spec:
         - name: nvideo-rabbitmq-svc
           kind: Service
           port: 5672
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
