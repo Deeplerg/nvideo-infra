@@ -35,7 +35,7 @@ replacements:
     kind: ConfigMap
   targets:
   - fieldPaths:
-      - labels.name-for-gateway
+      - metadata.labels.name-for-gateway
     select:
       kind: Namespace
 
