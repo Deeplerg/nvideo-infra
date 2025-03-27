@@ -19,6 +19,7 @@ spec:
       containers:
       - name: nvideo-web
         image: nvideo-web-image-name-placeholder # kustomize
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
         env:
