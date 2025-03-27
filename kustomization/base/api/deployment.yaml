@@ -39,7 +39,7 @@ spec:
               name: nvideo-db-secret
               key: user
         - name: POSTGRES_HOST
-          value: nvideo-postgres
+          value: nvideo-postgres-svc
         - name: POSTGRES_PORT
           value: "5432"
         - name: POSTGRES_DB
@@ -60,7 +60,7 @@ spec:
               name: nvideo-rabbitmq-secret
               key: user
         - name: RABBITMQ_HOST
-          value: nvideo-rabbitmq
+          value: nvideo-rabbitmq-svc
         - name: RABBITMQ_PORT
           value: "5672"
         - name: RABBITMQ_PROTO
