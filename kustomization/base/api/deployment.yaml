@@ -52,7 +52,7 @@ spec:
               key: db-name
 
         # rabbitmq
-        - name: RABBITMQ_PASSWORD
+        - name: RABBITMQ_PASS
           valueFrom:
             secretKeyRef:
               name: nvideo-rabbitmq-secret
