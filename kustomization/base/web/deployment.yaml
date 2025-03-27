@@ -43,7 +43,7 @@ spec:
               name: nvideo-rabbitmq-secret
               key: user
         - name: RABBITMQ_HOST
-          value: nvideo-rabbitmq
+          value: nvideo-rabbitmq-svc
         - name: RABBITMQ_PORT
           value: "5672"
         - name: RABBITMQ_PROTO
