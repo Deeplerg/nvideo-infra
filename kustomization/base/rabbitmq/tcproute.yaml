@@ -4,6 +4,7 @@ metadata:
   name: rabbitmq-tcproute
   labels:
     nvideo/route-for: rabbitmq
+    name-for-gateway: nvideo-placeholder
 spec:
   parentRefs:
     - name: gateway-name-placeholder # kustomize GATEWAY_NAME

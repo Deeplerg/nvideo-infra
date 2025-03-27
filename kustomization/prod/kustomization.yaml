@@ -47,6 +47,10 @@ replacements:
     - metadata.labels.name-for-gateway
     select:
       kind: Namespace
+  - fieldPaths:
+    - metadata.labels.name-for-gateway
+    select:
+      kind: TCPRoute
 - source:
     fieldPath: data.GATEWAY_NAME
     kind: ConfigMap
