@@ -8,8 +8,6 @@ spec:
   parentRefs:
     - name: gateway-name-placeholder # kustomize GATEWAY_NAME
       namespace: gateway-namespace-placeholder # kustomize GATEWAY_NAMESPACE
-  hostnames:
-    - gateway-host-placeholder # kustomize GATEWAY_HOST_RABBITMQ_AMQP
   rules:
     - backendRefs:
         - name: nvideo-rabbitmq-svc
