@@ -91,17 +91,6 @@ replacements:
 
 - source:
     name: environment-variables
-    fieldPath: data.GATEWAY_HOST_RABBITMQ
-    kind: ConfigMap
-  targets:
-  - fieldPaths:
-    - spec.hostnames.0
-    select:
-      kind: TCPRoute
-      labelSelector: "nvideo/route-for=rabbitmq"
-
-- source:
-    name: environment-variables
     fieldPath: data.GATEWAY_PATH_API
     kind: ConfigMap
   targets:
