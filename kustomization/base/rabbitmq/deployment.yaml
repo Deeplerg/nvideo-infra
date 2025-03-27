@@ -30,11 +30,13 @@ spec:
             secretKeyRef:
               name: nvideo-rabbitmq-secret
               key: password
+              optional: false
         - name: RABBITMQ_DEFAULT_USER
           valueFrom:
             secretKeyRef:
               name: nvideo-rabbitmq-secret
               key: user
+              optional: false
         volumeMounts:
         - name:  rabbitmq-data
           mountPath: /var/lib/rabbitmq

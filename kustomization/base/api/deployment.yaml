@@ -34,11 +34,13 @@ spec:
             secretKeyRef:
               name: nvideo-db-secret
               key: password
+              optional: false
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
               name: nvideo-db-secret
               key: user
+              optional: false
         - name: POSTGRES_HOST
           value: nvideo-postgres-svc
         - name: POSTGRES_PORT
@@ -55,11 +57,13 @@ spec:
             secretKeyRef:
               name: nvideo-rabbitmq-secret
               key: password
+              optional: false
         - name: RABBITMQ_USER
           valueFrom:
             secretKeyRef:
               name: nvideo-rabbitmq-secret
               key: user
+              optional: false
         - name: RABBITMQ_HOST
           value: nvideo-rabbitmq-svc
         - name: RABBITMQ_PORT

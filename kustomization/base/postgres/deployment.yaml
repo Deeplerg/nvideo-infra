@@ -29,11 +29,19 @@ spec:
             secretKeyRef:
               name: nvideo-db-secret
               key: password
+              optional: false
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
               name: nvideo-db-secret
               key: user
+              optional: false
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-db-secret
+              key: db-name
+              optional: false
         volumeMounts:
         - name:  postgres-data
           mountPath: /var/lib/postgresql/data
