@@ -26,7 +26,7 @@ spec:
         - name: API_PROTO
           value: http # internal
         - name: API_HOST
-          value: "nvideo-api"
+          value: "nvideo-api-svc"
         - name: API_PORT
           value: "80"
         - name: API_PATH
