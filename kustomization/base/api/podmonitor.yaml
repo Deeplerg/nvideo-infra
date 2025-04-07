@@ -1,12 +1,12 @@
 apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
+kind: PodMonitor
 metadata:
   name: nvideo-api-monitor
 spec:
   selector:
     matchLabels:
       app: nvideo-api
-  endpoints:
+  podMetricsEndpoints:
   - port: api
     path: /metrics
     interval: 10s
