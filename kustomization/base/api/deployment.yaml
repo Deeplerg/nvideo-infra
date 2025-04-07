@@ -27,6 +27,11 @@ spec:
           value: /placeholder
         - name: MODEL_AVAILABILITY_THRESHOLD
           value: "30"
+        - name: API_ADMIN_USER
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-api-secret
+              key: admin-user
 
         # postgres
         - name: POSTGRES_PASSWORD
