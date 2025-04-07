@@ -10,10 +10,10 @@ namespace: nvideo-prod
 images:
 - name: nvideo-api-image-name-placeholder
   newName: registry.deeplerg.dev/nvideo-api
-  newTag: main-21e677fc
+  newTag: main-ac1ec8b4
 - name: nvideo-web-image-name-placeholder
   newName: registry.deeplerg.dev/nvideo-web
-  newTag: main-21e677fc
+  newTag: main-ac1ec8b4
 
 configMapGenerator:
 - behavior: create
