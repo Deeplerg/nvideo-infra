@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nvideo-remote-transcription
+  labels:
+    needs-pull-secret: private
+spec:
+  selector:
+    matchLabels:
+      app: nvideo-remote-transcription
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nvideo-remote-transcription
+    spec:
+      nodeSelector:
+        main-ingress: "true"
+      containers:
+      - name: nvideo-remote-transcription
+        image: nvideo-remote-transcription-image-name-placeholder # kustomize
+        imagePullPolicy: Always
+        # ports:
+        # - containerPort: 8000
+        env:
+        - name: REMOTE_TRANSCRIPTION_PROVIDER
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-remote-transcription-config
+              key: provider
+        - name: REMOTE_TRANSCRIPTION_MODEL
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-remote-transcription-config
+              key: model
+        - name: TRANSCRIPTION_CHUNK_SECONDS
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-remote-transcription-config
+              key: chunk-seconds
+        - name: REMOTE_TRANSCRIPTION_LLM_PROMPT
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-remote-transcription-config
+              key: llm-prompt
+        - name: REMOTE_TRANSCRIPTION_DEEPGRAM_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-deepgram-secret
+              key: api-key
+              optional: false
+        - name: REMOTE_TRANSCRIPTION_GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-gemini-secret
+              key: api-key
+              optional: false
+
+        # rabbitmq
+        - name: RABBITMQ_PASS
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-rabbitmq-secret
+              key: password
+              optional: false
+        - name: RABBITMQ_USER
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-rabbitmq-secret
+              key: user
+              optional: false
+        - name: RABBITMQ_HOST
+          value: nvideo-rabbitmq-svc
+        - name: RABBITMQ_PORT
+          value: "5672"
+        - name: RABBITMQ_PROTO
+          value: "amqp"
+        resources:
+          requests:
+            memory: 128Mi
+      imagePullSecrets:
+      - name: registry-secret-name-placeholder # kustomize

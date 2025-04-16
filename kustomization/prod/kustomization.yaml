@@ -14,6 +14,9 @@ images:
 - name: nvideo-web-image-name-placeholder
   newName: registry.deeplerg.dev/nvideo-web
   newTag: main-d3e403b8
+- name: nvideo-remote-transcription-image-name-placeholder
+- name: nvideo-remote-language-image-name-placeholder
+- name: nvideo-local-graph-image-name-placeholder
 
 configMapGenerator:
 - behavior: create

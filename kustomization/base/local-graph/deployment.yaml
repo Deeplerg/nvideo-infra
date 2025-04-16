@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nvideo-local-graph
+  labels:
+    needs-pull-secret: private
+spec:
+  selector:
+    matchLabels:
+      app: nvideo-local-graph
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nvideo-local-graph
+    spec:
+      nodeSelector:
+        main-ingress: "true"
+      containers:
+      - name: nvideo-local-graph
+        image: nvideo-local-graph-image-name-placeholder # kustomize
+        imagePullPolicy: Always
+        # ports:
+        # - containerPort: 8000
+        env:
+        - name: LOCAL_GRAPH_EMBED_MODEL
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-local-graph-config
+              key: model
+        - name: GRAPH_EMBED_MODEL_DIR
+          value: /models
+        - name: GRAPH_USE_PCA
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-local-graph-config
+              key: use-pca
+        - name: GRAPH_FAVOR_UMAP
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-local-graph-config
+              key: favor-umap
+        - name: GRAPH_PCA_MAX_DIMENSIONS
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-local-graph-config
+              key: pca-max-dim
+        - name: GRAPH_UMAP_NEIGHBOURS
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-local-graph-config
+              key: pca-umap-neigh
+        - name: GRAPH_TSNE_PERPLEXITY
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-local-graph-config
+              key: pca-tsne-perplexity
+
+        # rabbitmq
+        - name: RABBITMQ_PASS
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-rabbitmq-secret
+              key: password
+              optional: false
+        - name: RABBITMQ_USER
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-rabbitmq-secret
+              key: user
+              optional: false
+        - name: RABBITMQ_HOST
+          value: nvideo-rabbitmq-svc
+        - name: RABBITMQ_PORT
+          value: "5672"
+        - name: RABBITMQ_PROTO
+          value: "amqp"
+        resources:
+          requests:
+            memory: 512Mi
+        volumeMounts:
+        - name: local-graph-models
+          mountPath: /models
+      volumes:
+      - name: local-graph-models
+        persistentVolumeClaim:
+          claimName: nvideo-local-graph-pvc
+      imagePullSecrets:
+      - name: registry-secret-name-placeholder # kustomize

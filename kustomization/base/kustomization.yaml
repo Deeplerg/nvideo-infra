@@ -22,4 +22,11 @@ resources:
   - "rabbitmq/service.yaml"
   - "rabbitmq/tcproute.yaml"
 
+  - "remote-transcription/deployment.yaml"
+
+  - "remote-language/deployment.yaml"
+
+  - "local-graph/deployment.yaml"
+  - "local-graph/pvc.yaml"
+
 namespace: nvideo
