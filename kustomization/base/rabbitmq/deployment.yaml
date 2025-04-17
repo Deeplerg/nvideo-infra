@@ -13,7 +13,7 @@ spec:
         app: nvideo-rabbitmq
     spec:
       nodeSelector:
-        main-ingress: "true"
+        nvideo-server: "true"
       containers:
       - name: rabbitmq
         image: rabbitmq:4-management-alpine

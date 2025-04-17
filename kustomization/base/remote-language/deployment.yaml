@@ -15,7 +15,7 @@ spec:
         app: nvideo-remote-language
     spec:
       nodeSelector:
-        main-ingress: "true"
+        nvideo-models: "true"
       containers:
       - name: nvideo-remote-language
         image: nvideo-remote-language-image-name-placeholder # kustomize

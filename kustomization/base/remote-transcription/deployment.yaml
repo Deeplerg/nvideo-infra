@@ -15,7 +15,7 @@ spec:
         app: nvideo-remote-transcription
     spec:
       nodeSelector:
-        main-ingress: "true"
+        nvideo-models: "true"
       containers:
       - name: nvideo-remote-transcription
         image: nvideo-remote-transcription-image-name-placeholder # kustomize

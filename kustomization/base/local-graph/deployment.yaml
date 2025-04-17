@@ -15,7 +15,7 @@ spec:
         app: nvideo-local-graph
     spec:
       nodeSelector:
-        main-ingress: "true"
+        nvideo-models: "true"
       containers:
       - name: nvideo-local-graph
         image: nvideo-local-graph-image-name-placeholder # kustomize

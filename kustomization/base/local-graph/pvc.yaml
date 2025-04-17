@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: nvideo-local-graph-pvc
 spec:
-  storageClassName: main-ingress-hostpath
+  storageClassName: nvideo-models-hostpath
   accessModes:
     - ReadWriteOnce
   resources:

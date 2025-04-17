@@ -15,7 +15,7 @@ spec:
         app: nvideo-web
     spec:
       nodeSelector:
-        main-ingress: "true"
+        nvideo-server: "true"
       containers:
       - name: nvideo-web
         image: nvideo-web-image-name-placeholder # kustomize
