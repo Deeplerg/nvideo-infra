@@ -43,6 +43,11 @@ spec:
             configMapKeyRef:
               name: nvideo-remote-language-config
               key: summary-prompt
+        - name: LANGUAGE_OVERALL_SUMMARY_SYSTEM_PROMPT
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-remote-language-config
+              key: overall-summary-prompt
         - name: LANGUAGE_ENTITY_SYSTEM_PROMPT
           valueFrom:
             configMapKeyRef:
