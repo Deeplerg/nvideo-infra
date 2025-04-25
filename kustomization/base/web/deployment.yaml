@@ -36,6 +36,17 @@ spec:
             configMapKeyRef:
               name: nvideo-web-config
               key: dashboard-url
+        - name: WEB_MAX_VIDEO_DURATION_SECONDS
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-web-config
+              key: max-video-duration-seconds
+        - name: WEB_YOUTUBE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: nvideo-youtube-secret
+              key: api-key
+              optional: false
 
         # rabbitmq
         - name: RABBITMQ_PASS
