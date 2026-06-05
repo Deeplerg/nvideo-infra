@@ -22,7 +22,7 @@ spec:
         imagePullPolicy: Always
         # ports:
         # - containerPort: 8000
-        env:
+env:
         - name: REMOTE_TRANSCRIPTION_PROVIDER
           valueFrom:
             configMapKeyRef:
@@ -43,16 +43,16 @@ spec:
             configMapKeyRef:
               name: nvideo-remote-transcription-config
               key: llm-prompt
-        - name: REMOTE_TRANSCRIPTION_DEEPGRAM_API_KEY
+        - name: REMOTE_TRANSCRIPTION_PROVIDER_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-remote-transcription-config
+              key: base-url
+              optional: true
+        - name: REMOTE_TRANSCRIPTION_PROVIDER_API_KEY
           valueFrom:
             secretKeyRef:
-              name: nvideo-deepgram-secret
-              key: api-key
-              optional: false
-        - name: REMOTE_TRANSCRIPTION_GEMINI_API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: nvideo-gemini-secret
+              name: nvideo-transcription-secret
               key: api-key
               optional: false
 

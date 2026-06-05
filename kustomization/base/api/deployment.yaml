@@ -32,6 +32,8 @@ spec:
           value: /placeholder
         - name: MODEL_AVAILABILITY_THRESHOLD
           value: "30"
+        - name: API_GENERATE_POST_TIMEOUT_SECONDS
+          value: "120"
         - name: API_ADMIN_USER
           valueFrom:
             secretKeyRef:

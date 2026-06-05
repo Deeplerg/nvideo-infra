@@ -33,6 +33,12 @@ spec:
             configMapKeyRef:
               name: nvideo-remote-language-config
               key: model
+        - name: REMOTE_LANGUAGE_MODEL_PROVIDER_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-remote-language-config
+              key: base-url
+              optional: true
         - name: LANGUAGE_EMPTY_CHUNK_THRESHOLD_MS
           valueFrom:
             configMapKeyRef:
@@ -53,10 +59,30 @@ spec:
             configMapKeyRef:
               name: nvideo-remote-language-config
               key: entity-prompt
+        - name: LANGUAGE_TOPIC_EXTRACTION_SYSTEM_PROMPT
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-remote-language-config
+              key: topic-prompt
+        - name: LANGUAGE_TAG_NORMALIZATION_SYSTEM_PROMPT
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-remote-language-config
+              key: tag-prompt
+        - name: LANGUAGE_SOCIAL_POST_SYSTEM_PROMPT
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-remote-language-config
+              key: post-prompt
+        - name: LANGUAGE_TIKTOK_SCENARIO_SYSTEM_PROMPT
+          valueFrom:
+            configMapKeyRef:
+              name: nvideo-remote-language-config
+              key: tiktok-prompt
         - name: REMOTE_LANGUAGE_MODEL_PROVIDER_API_KEY
           valueFrom:
             secretKeyRef:
-              name: nvideo-gemini-secret
+              name: nvideo-language-secret
               key: api-key
               optional: false
 
