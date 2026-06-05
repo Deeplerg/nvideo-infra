@@ -10,19 +10,19 @@ namespace: nvideo-prod
 images:
 - name: nvideo-api-image-name-placeholder
   newName: registry.deeplerg.dev/nvideo-api
-  newTag: main-d466a636
+  newTag: main-d7e9bf8d
 - name: nvideo-local-graph-image-name-placeholder
   newName: registry.deeplerg.dev/nvideo-local-graph
-  newTag: main-d466a636
+  newTag: main-d7e9bf8d
 - name: nvideo-remote-language-image-name-placeholder
   newName: registry.deeplerg.dev/nvideo-remote-language
-  newTag: main-d466a636
+  newTag: main-d7e9bf8d
 - name: nvideo-remote-transcription-image-name-placeholder
   newName: registry.deeplerg.dev/nvideo-remote-transcription
-  newTag: main-d466a636
+  newTag: main-d7e9bf8d
 - name: nvideo-web-image-name-placeholder
   newName: registry.deeplerg.dev/nvideo-web
-  newTag: main-d466a636
+  newTag: main-d7e9bf8d
 
 configMapGenerator:
 - behavior: create
