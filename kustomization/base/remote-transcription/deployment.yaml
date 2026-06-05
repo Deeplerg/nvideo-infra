@@ -22,7 +22,7 @@ spec:
         imagePullPolicy: Always
         # ports:
         # - containerPort: 8000
-env:
+        env:
         - name: REMOTE_TRANSCRIPTION_PROVIDER
           valueFrom:
             configMapKeyRef:
