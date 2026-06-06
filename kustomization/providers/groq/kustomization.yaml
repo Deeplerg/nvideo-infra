@@ -57,5 +57,5 @@ patches:
               - name: REMOTE_TRANSCRIPTION_PROVIDER_API_KEY
                 valueFrom:
                   secretKeyRef:
-                    name: nvideo-provider-secret-groq
+                    name: nvideo-transcription-secret-groq
                     key: api-key
