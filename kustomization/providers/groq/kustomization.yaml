@@ -1,0 +1,61 @@
+﻿apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+nameSuffix: -groq
+
+resources:
+  - ../../base/remote-language
+  - ../../base/remote-transcription
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: nvideo-remote-language
+      spec:
+        template:
+          spec:
+            containers:
+            - name: nvideo-remote-language
+              env:
+              - name: REMOTE_LANGUAGE_MODEL_PROVIDER
+                value: "openai"
+                valueFrom: null
+              - name: REMOTE_LANGUAGE_MODEL
+                value: "llama-3.3-70b-versatile"
+                valueFrom: null
+              - name: REMOTE_LANGUAGE_MODEL_PROVIDER_BASE_URL
+                value: "https://api.groq.com/openai/v1"
+                valueFrom: null
+              - name: REMOTE_LANGUAGE_MODEL_PROVIDER_API_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: nvideo-language-secret-groq
+                    key: api-key
+
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: nvideo-remote-transcription
+      spec:
+        template:
+          spec:
+            containers:
+            - name: nvideo-remote-transcription
+              env:
+              - name: REMOTE_TRANSCRIPTION_PROVIDER
+                value: "openai"
+                valueFrom: null
+              - name: REMOTE_TRANSCRIPTION_MODEL
+                value: "whisper-large-v3-turbo"
+                valueFrom: null
+              - name: REMOTE_TRANSCRIPTION_PROVIDER_BASE_URL
+                value: "https://api.groq.com/openai/v1"
+                valueFrom: null
+              - name: REMOTE_TRANSCRIPTION_PROVIDER_API_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: nvideo-provider-secret-groq
+                    key: api-key
