@@ -42,13 +42,13 @@ patches:
             containers:
             - name: nvideo-remote-transcription
               env:
-              - name: REMOTE_TRANSCRIPTION_MODEL_PROVIDER
+              - name: REMOTE_TRANSCRIPTION_PROVIDER
                 value: "google"
                 valueFrom: null
               - name: REMOTE_TRANSCRIPTION_MODEL
                 value: "gemini-flash-lite-latest"
                 valueFrom: null
-              - name: REMOTE_TRANSCRIPTION_MODEL_PROVIDER_API_KEY
+              - name: REMOTE_TRANSCRIPTION_PROVIDER_API_KEY
                 valueFrom:
                   secretKeyRef:
                     name: nvideo-transcription-secret-gemini
